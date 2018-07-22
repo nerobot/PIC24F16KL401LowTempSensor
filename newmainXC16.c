@@ -12,8 +12,8 @@
 
 int main(void) {
     
-    _TRISB4 = 0;
-    _ANSB4 = 0;
+    //_TRISB4 = 0;
+    //_ANSB4 = 0;
     //PORTBbits.RB4 = 0;
     
     while(1){
