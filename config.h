@@ -27,7 +27,7 @@ extern "C" {
 
 // FOSCSEL
 #pragma config FNOSC = FRC              // Oscillator Select (Fast RC Oscillator (FRC))
-#pragma config SOSCSRC = ANA            // SOSC Source Type (Analog Mode for use with crystal)
+#pragma config SOSCSRC = DIG            // SOSC Source Type (Digital Mode for use with external clock on SCLKI)
 #pragma config LPRCSEL = HP             // LPRC Power and Accuracy (High Power/High Accuracy)
 #pragma config IESO = ON                // Internal External Switch Over bit (Internal External Switchover mode enabled (Two-speed Start-up enabled))
 
