@@ -15,11 +15,37 @@
 #include "spi2.h"
 #include "RFM69.h"
 
+typedef enum {
+    GATEWAY_ID,
+    WEATHER_STATION_ID,	
+    TEST_STATION_1_ID,
+    TEST_STATION_2_ID
+} id_t;
+
+// Data structure that will contain all data being sent via the RFM69 RF module.
+struct dataStruct{
+    uint16_t    temp;
+    uint8_t     hour;
+    uint8_t     minute;
+    uint8_t     second;
+    uint8_t     day;
+    uint8_t     month;
+    uint8_t     year;
+} data;
+
+#define NETWORKID       0   					// Must be the same for all nodes
+#define MYNODEID        TEST_STATION_2_ID   	// My node ID
+#define TONODEID        GATEWAY_ID              // Destination node ID
+
+// RFM69 frequency, uncomment the frequency of your module:
+#define FREQUENCY       RF69_433MHZ
+
+// AES encryption (or not):
+#define ENCRYPT         true // Set to "true" to use encryption
+#define ENCRYPTKEY      "TOPSECRETPASSWRD" // Use the same 16-byte key on all nodes
+
 int main(void) {
-    
-    //_TRISB4 = 0;
-    //_ANSB4 = 0;
-    //PORTBbits.RB4 = 0;
+    // Setting up needed variables.
     
     // init uart1
     initU1();
@@ -35,13 +61,26 @@ int main(void) {
     }
     putU1S("mcp init\n\r");
     
-    uint16_t temp;
+    
+    // spi init
+    spiInit(SPI_MODE0);
+    putU1S("spi init\n\r");
+    
+    // init rfm
+    RFM69(0,0,0);           // This should probably be improved!
+    while (RFM69Initialize(FREQUENCY, MYNODEID, NETWORKID) == 0){}
+    encrypt(ENCRYPTKEY);
+    putU1S("RFM69 initialised.\n\r");         
     
     while(1){
-    //    PORTBbits.RB4 ^= 1;
-        temp = readTemp();
-        putU1((char)(temp >> 8));
-        putU1((char)(temp & 0xff));
+        // Reading the temperature
+        data.temp = readTemp();
+        // Sendding the temperature
+        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
+        
+        putU1((char)(data.temp >> 8));
+        putU1((char)(data.temp & 0xff));
+        
         __delay_ms(1000);
     }
     
