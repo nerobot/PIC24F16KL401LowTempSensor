@@ -12,6 +12,7 @@
 #include "uart1.h"
 #include "i2c1.h"
 #include "mcp9808.h"
+#include "spi2.h"
 
 int main(void) {
     
