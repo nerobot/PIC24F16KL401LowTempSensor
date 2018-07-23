@@ -13,6 +13,7 @@
 #include "i2c1.h"
 #include "mcp9808.h"
 #include "spi2.h"
+#include "RFM69.h"
 
 int main(void) {
     
