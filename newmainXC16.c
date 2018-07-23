@@ -15,12 +15,6 @@
 #include "spi2.h"
 #include "RFM69.h"
 
-typedef enum {
-    GATEWAY_ID,
-    WEATHER_STATION_ID,	
-    TEST_STATION_1_ID,
-    TEST_STATION_2_ID
-} id_t;
 
 // Data structure that will contain all data being sent via the RFM69 RF module.
 struct dataStruct{
@@ -32,6 +26,13 @@ struct dataStruct{
     uint8_t     month;
     uint8_t     year;
 } data;
+
+typedef enum {
+    GATEWAY_ID,
+    WEATHER_STATION_ID,	
+    TEST_STATION_1_ID,
+    TEST_STATION_2_ID
+} id_t;
 
 #define NETWORKID       0   					// Must be the same for all nodes
 #define MYNODEID        TEST_STATION_2_ID   	// My node ID
@@ -52,7 +53,7 @@ int main(void) {
     putU1S("uart1 init\n\r");
     
     // init i2c1
-    i2c_init();
+    i2cInit();
     putU1S("i2c1 init\n\r");
     
     // init mcp9808
@@ -68,15 +69,17 @@ int main(void) {
     
     // init rfm
     RFM69(0,0,0);           // This should probably be improved!
+    putU1S("RFM69 initialised 1.\n\r");   
     while (RFM69Initialize(FREQUENCY, MYNODEID, NETWORKID) == 0){}
+    putU1S("RFM69 initialised 2.\n\r");   
     encrypt(ENCRYPTKEY);
-    putU1S("RFM69 initialised.\n\r");         
+    putU1S("RFM69 initialised 3.\n\r");         
     
     while(1){
         // Reading the temperature
         data.temp = readTemp();
         // Sendding the temperature
-        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
+        //send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
         
         putU1((char)(data.temp >> 8));
         putU1((char)(data.temp & 0xff));

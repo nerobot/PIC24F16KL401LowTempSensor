@@ -8,6 +8,10 @@
       <itemPath>PIC24F16KL401.h</itemPath>
       <itemPath>uart1.h</itemPath>
       <itemPath>i2c1.h</itemPath>
+      <itemPath>RFM69.h</itemPath>
+      <itemPath>RFM69registers.h</itemPath>
+      <itemPath>mcp9808.h</itemPath>
+      <itemPath>spi2.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -19,6 +23,9 @@
       <itemPath>newmainXC16.c</itemPath>
       <itemPath>uart1.c</itemPath>
       <itemPath>i2c1.c</itemPath>
+      <itemPath>RFM69.c</itemPath>
+      <itemPath>mcp9808.c</itemPath>
+      <itemPath>spi2.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

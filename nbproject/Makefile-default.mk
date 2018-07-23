@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=newmainXC16.c uart1.c i2c1.c mcp9808.c spi2.c RFM69.c
+SOURCEFILES_QUOTED_IF_SPACED=newmainXC16.c uart1.c i2c1.c RFM69.c mcp9808.c spi2.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/newmainXC16.o ${OBJECTDIR}/uart1.o ${OBJECTDIR}/i2c1.o ${OBJECTDIR}/mcp9808.o ${OBJECTDIR}/spi2.o ${OBJECTDIR}/RFM69.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/newmainXC16.o.d ${OBJECTDIR}/uart1.o.d ${OBJECTDIR}/i2c1.o.d ${OBJECTDIR}/mcp9808.o.d ${OBJECTDIR}/spi2.o.d ${OBJECTDIR}/RFM69.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/newmainXC16.o ${OBJECTDIR}/uart1.o ${OBJECTDIR}/i2c1.o ${OBJECTDIR}/RFM69.o ${OBJECTDIR}/mcp9808.o ${OBJECTDIR}/spi2.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/newmainXC16.o.d ${OBJECTDIR}/uart1.o.d ${OBJECTDIR}/i2c1.o.d ${OBJECTDIR}/RFM69.o.d ${OBJECTDIR}/mcp9808.o.d ${OBJECTDIR}/spi2.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/newmainXC16.o ${OBJECTDIR}/uart1.o ${OBJECTDIR}/i2c1.o ${OBJECTDIR}/mcp9808.o ${OBJECTDIR}/spi2.o ${OBJECTDIR}/RFM69.o
+OBJECTFILES=${OBJECTDIR}/newmainXC16.o ${OBJECTDIR}/uart1.o ${OBJECTDIR}/i2c1.o ${OBJECTDIR}/RFM69.o ${OBJECTDIR}/mcp9808.o ${OBJECTDIR}/spi2.o
 
 # Source Files
-SOURCEFILES=newmainXC16.c uart1.c i2c1.c mcp9808.c spi2.c RFM69.c
+SOURCEFILES=newmainXC16.c uart1.c i2c1.c RFM69.c mcp9808.c spi2.c
 
 
 CFLAGS=
@@ -115,6 +115,13 @@ ${OBJECTDIR}/i2c1.o: i2c1.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c1.c  -o ${OBJECTDIR}/i2c1.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/i2c1.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/i2c1.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/RFM69.o: RFM69.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/RFM69.o.d 
+	@${RM} ${OBJECTDIR}/RFM69.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  RFM69.c  -o ${OBJECTDIR}/RFM69.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/RFM69.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/RFM69.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 ${OBJECTDIR}/mcp9808.o: mcp9808.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/mcp9808.o.d 
@@ -128,13 +135,6 @@ ${OBJECTDIR}/spi2.o: spi2.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/spi2.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  spi2.c  -o ${OBJECTDIR}/spi2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/spi2.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/spi2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/RFM69.o: RFM69.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/RFM69.o.d 
-	@${RM} ${OBJECTDIR}/RFM69.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  RFM69.c  -o ${OBJECTDIR}/RFM69.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/RFM69.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/RFM69.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
 ${OBJECTDIR}/newmainXC16.o: newmainXC16.c  nbproject/Makefile-${CND_CONF}.mk
@@ -158,6 +158,13 @@ ${OBJECTDIR}/i2c1.o: i2c1.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  i2c1.c  -o ${OBJECTDIR}/i2c1.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/i2c1.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/i2c1.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/RFM69.o: RFM69.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/RFM69.o.d 
+	@${RM} ${OBJECTDIR}/RFM69.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  RFM69.c  -o ${OBJECTDIR}/RFM69.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/RFM69.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/RFM69.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 ${OBJECTDIR}/mcp9808.o: mcp9808.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/mcp9808.o.d 
@@ -171,13 +178,6 @@ ${OBJECTDIR}/spi2.o: spi2.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/spi2.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  spi2.c  -o ${OBJECTDIR}/spi2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/spi2.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/spi2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/RFM69.o: RFM69.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/RFM69.o.d 
-	@${RM} ${OBJECTDIR}/RFM69.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  RFM69.c  -o ${OBJECTDIR}/RFM69.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/RFM69.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/RFM69.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
