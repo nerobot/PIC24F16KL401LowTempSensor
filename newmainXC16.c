@@ -10,6 +10,7 @@
 #include "xc.h"
 #include <libpic30.h>
 #include "uart1.h"
+#include "i2c1.h"
 
 int main(void) {
     

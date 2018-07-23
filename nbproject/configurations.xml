@@ -7,6 +7,7 @@
       <itemPath>config.h</itemPath>
       <itemPath>PIC24F16KL401.h</itemPath>
       <itemPath>uart1.h</itemPath>
+      <itemPath>i2c1.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -17,6 +18,7 @@
                    projectFiles="true">
       <itemPath>newmainXC16.c</itemPath>
       <itemPath>uart1.c</itemPath>
+      <itemPath>i2c1.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
