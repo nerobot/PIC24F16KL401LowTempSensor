@@ -5,7 +5,7 @@
 #define false   0
 #define true    1
 
-/*void RFM69(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW){
+void RFM69(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW){
   _slaveSelectPin = slaveSelectPin;     // TODO: NEEDS LOOKING INTO
   _interruptPin = interruptPin;         // TODO: NEEDS LOOKING INTO
   _mode = RF69_MODE_STANDBY;
@@ -19,9 +19,9 @@
   uint32_t idleDuration = DEFAULT_LISTEN_IDLE_US;
   listenModeSetDurations(rxDuration, idleDuration);
 #endif
-}*/
+}
 
-void RFM69(){
+/*void RFM69(){
     _slaveSelectPin = 0;     // TODO: NEEDS LOOKING INTO
   _interruptPin = 0;         // TODO: NEEDS LOOKING INTO
   _mode = RF69_MODE_STANDBY;
@@ -35,7 +35,7 @@ void RFM69(){
   uint32_t idleDuration = DEFAULT_LISTEN_IDLE_US;
   listenModeSetDurations(rxDuration, idleDuration);
 #endif
-}
+}*/
 
 bool RFM69Initialize(uint8_t freqBand, uint8_t nodeID, uint8_t networkID)
 {
