@@ -42,8 +42,8 @@ typedef enum {
 #define FREQUENCY       RF69_433MHZ
 
 // AES encryption (or not):
-#define ENCRYPT         true // Set to "true" to use encryption
-#define ENCRYPTKEY      "TOPSECRETPASSWRD" // Use the same 16-byte key on all nodes
+#define ENCRYPT         true                    // Set to "true" to use encryption
+#define ENCRYPTKEY      "TOPSECRETPASSWRD"      // Use the same 16-byte key on all nodes
 
 int main(void) {
     // Setting up needed variables.
@@ -78,8 +78,8 @@ int main(void) {
     while(1){
         // Reading the temperature
         data.temp = readTemp();
-        // Sendding the temperature
-        //send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
+        // Sending the temperature
+        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
         
         putU1((char)(data.temp >> 8));
         putU1((char)(data.temp & 0xff));

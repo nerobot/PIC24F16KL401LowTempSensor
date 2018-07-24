@@ -58,12 +58,15 @@ extern "C" {
 #endif
 
     static volatile uint8_t _slaveSelectPin;
- //   static volatile uint8_t _interruptPin;
-    static volatile uint8_t _interruptNum;
-    static volatile uint8_t _address;
+    //static volatile uint8_t _interruptPin;
+    //static volatile uint8_t _interruptNum;
+    //static volatile uint8_t _address;
     static volatile uint8_t _promiscuousMode;
     static volatile uint8_t _powerLevel;
-    static volatile uint8_t _isRFM69HW;
+    //static volatile uint8_t _isRFM69HW;
+    
+    static volatile uint8_t isRFM69HW;
+    static volatile uint8_t address;
 #if defined (SPCR) && defined (SPSR)
     uint8_t _SPCR;
     uint8_t _SPSR;
@@ -83,6 +86,7 @@ extern "C" {
     static volatile bool _inISR;
 
 void RFM69(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW);
+void RFM69BLANK();
 bool RFM69Initialize(uint8_t freqBand, uint8_t nodeID, uint8_t networkID);
 void writeReg(uint8_t addr, uint8_t val);
 uint8_t readReg(uint8_t addr);
