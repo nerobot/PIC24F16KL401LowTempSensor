@@ -40,6 +40,7 @@ void RFM69BLANK(){
 bool RFM69Initialize(uint8_t freqBand, uint8_t nodeID, uint8_t networkID)
 {
     _LATB14 = 1;
+    _ANSB14 = 0;
   //_interruptNum = digitalPinToInterrupt(_interruptPin);
   //if (_interruptNum == NOT_AN_INTERRUPT) return false;
 #ifdef RF69_ATTACHINTERRUPT_TAKES_PIN_NUMBER
@@ -294,7 +295,7 @@ void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, bool r
 {
     setMode(RF69_MODE_STANDBY); // turn off receiver to prevent reception while filling fifo
     while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00){} // wait for ModeReady
-    //putU1S("RFM69 initialised D.\n\r");  
+    //putU1S("RFM69 mode ready D.\n\r");  
     writeReg(REG_DIOMAPPING1, RF_DIOMAPPING1_DIO0_00); // DIO0 is "Packet Sent"
     if (bufferSize > RF69_MAX_DATA_LEN)
         bufferSize = RF69_MAX_DATA_LEN;
@@ -336,7 +337,7 @@ void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, bool reques
     //putU1S("RFM69 initialised SS.\n\r");  
     while (!canSend())
         receiveDone();
-    //putU1S("RFM69 initialised S.\n\r");  
+    //putU1S("Can se4nd.\n\r");  
     sendFrame(toAddress, buffer, bufferSize, requestACK, false);
 }
 

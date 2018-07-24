@@ -25,7 +25,7 @@ struct dataStruct{
     uint8_t     day;
     uint8_t     month;
     uint8_t     year;
-} data;
+} data1;
 
 typedef enum {
     GATEWAY_ID,
@@ -73,16 +73,20 @@ int main(void) {
     while (RFM69Initialize(FREQUENCY, MYNODEID, NETWORKID) == 0){}
     putU1S("RFM69 initialised 2.\n\r");   
     encrypt(ENCRYPTKEY);
-    putU1S("RFM69 initialised 3.\n\r");         
+    putU1S("RFM69 initialised 3.\n\r");     
+
+    float data;
     
     while(1){
         // Reading the temperature
-        data.temp = readTemp();
+        //data.temp = readTemp();
         // Sending the temperature
+        data = 1.23;
         send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
         
-        putU1((char)(data.temp >> 8));
-        putU1((char)(data.temp & 0xff));
+       // putU1((char)(data >> 8));
+       // putU1((char)(data & 0xff));
+        putU1('d');
         
         __delay_ms(1000);
     }
