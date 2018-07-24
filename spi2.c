@@ -11,6 +11,9 @@ void spiInit(uint8_t SpiMode){
     ANSAbits.ANSA1 = 0;         // Disable analog features for the GPIO RA1
     ANSAbits.ANSA0 = 0;         // Disable analog features for the GPIO RA0
     
+    ANSBbits.ANSB13 = 0;
+    TRISBbits.TRISB13 = 0;
+    
     // Configure MSSP in the fucntion of SPI1 - Connected to SSP2 (SSP1 used for I2C)
     //SSP2CON1 - Control register
     SSP2CON1bits.SSPEN = 0;     // Disable SPI1  module

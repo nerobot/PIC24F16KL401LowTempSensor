@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#define MCP9808_I2CADDR_DEFAULT        0x30         // Now already shifted one to the left to reduce program size
+#define MCP9808_I2CADDR_DEFAULT        0x18
 #define MCP9808_REG_CONFIG             0x01
 
 #define MCP9808_REG_CONFIG_SHUTDOWN    0x0100
@@ -32,13 +32,15 @@ extern "C" {
 #define MCP9808_REG_MANUF_ID           0x06
 #define MCP9808_REG_DEVICE_ID          0x07
 
-uint8_t initmcp();
-void mcpShutdown_wake( uint8_t sw_ID );     //! Wakes up or shuts-down the module dependig on sw_ID. Internal.
+
+//void mcpShutdown_wake( uint8_t sw_ID );     //! Wakes up or shuts-down the module dependig on sw_ID. Internal.
 void mcpShutdown(void);                     //! Puts the MCP module into shutdown mode
 void mcpWake(void);                         //! Wakes up the MCP module
 uint8_t initMCP();                          //! Initialise the MCP module
 uint16_t readTemp( void );                  //! Read the current temperature and return as a word (two bytes)
 float readTempC( void );                    //! Read the current temperature and return as a float
+//static void write16(uint8_t address, uint16_t data);
+//static uint16_t read16(uint8_t address);
 
 #ifdef	__cplusplus
 }
