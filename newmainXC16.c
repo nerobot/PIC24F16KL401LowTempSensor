@@ -75,8 +75,8 @@ int main(void) {
     while(1){
         // Reading the temperature
         data.temp = readTemp();
-        // Sendding the temperature
-        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
+        // Sendding the temperature. Requesting ACK
+        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 1);
         
         putU1((char)(data.temp >> 8));
         putU1((char)(data.temp & 0xff));

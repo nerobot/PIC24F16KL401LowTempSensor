@@ -5,13 +5,29 @@
 #define false   0
 #define true    1
 
-void RFM69(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW){
+/*void RFM69(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW){
   _slaveSelectPin = slaveSelectPin;     // TODO: NEEDS LOOKING INTO
   _interruptPin = interruptPin;         // TODO: NEEDS LOOKING INTO
   _mode = RF69_MODE_STANDBY;
   _promiscuousMode = false;
   _powerLevel = 31;
   _isRFM69HW = isRFM69HW;
+#if defined(RF69_LISTENMODE_ENABLE)
+  _isHighSpeed = true;
+  _haveEncryptKey = false;
+  uint32_t rxDuration = DEFAULT_LISTEN_RX_US;
+  uint32_t idleDuration = DEFAULT_LISTEN_IDLE_US;
+  listenModeSetDurations(rxDuration, idleDuration);
+#endif
+}*/
+
+void RFM69(){
+    _slaveSelectPin = 0;     // TODO: NEEDS LOOKING INTO
+  _interruptPin = 0;         // TODO: NEEDS LOOKING INTO
+  _mode = RF69_MODE_STANDBY;
+  _promiscuousMode = false;
+  _powerLevel = 31;
+  _isRFM69HW = 0;
 #if defined(RF69_LISTENMODE_ENABLE)
   _isHighSpeed = true;
   _haveEncryptKey = false;
