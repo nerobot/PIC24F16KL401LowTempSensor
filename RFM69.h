@@ -36,18 +36,18 @@ extern "C" {
 #define RF69_868MHZ            86
 #define RF69_915MHZ            91
 
-#define null                  0
-#define COURSE_TEMP_COEF    -90 // puts the temperature reading in the ballpark, user can fine tune the returned value
-#define RF69_BROADCAST_ADDR 255
-#define RF69_CSMA_LIMIT_MS 1000
-#define RF69_TX_LIMIT_MS   1000
+#define null                    0
+#define COURSE_TEMP_COEF        -90 // puts the temperature reading in the ballpark, user can fine tune the returned value
+#define RF69_BROADCAST_ADDR     255
+#define RF69_CSMA_LIMIT_MS      1000
+#define RF69_TX_LIMIT_MS        1000
     // 8 / 2^19 = 
 //#define RF69_FSTEP  61.03515625 // == FXOSC / 2^19 = 32MHz / 2^19 (p13 in datasheet)
-#define RF69_FSTEP          15.25879  //  8 / 2^19 = 15.25 LOOK INTO THIS!!!
+#define RF69_FSTEP              15.25879  //  8 / 2^19 = 15.25 LOOK INTO THIS!!!
     
 // TWS: define CTLbyte bits
-#define RFM69_CTL_SENDACK   0x80
-#define RFM69_CTL_REQACK    0x40
+#define RFM69_CTL_SENDACK       0x80
+#define RFM69_CTL_REQACK        0x40
 
 //#define RF69_LISTENMODE_ENABLE  //comment this line out to compile sketches without the ListenMode (saves ~2k)
 
@@ -57,33 +57,32 @@ extern "C" {
   #define  DEFAULT_LISTEN_IDLE_US 1000000
 #endif
 
-    static volatile uint8_t _slaveSelectPin;
-    //static volatile uint8_t _interruptPin;
-    //static volatile uint8_t _interruptNum;
-    //static volatile uint8_t _address;
-    static volatile uint8_t _promiscuousMode;
-    static volatile uint8_t _powerLevel;
-    //static volatile uint8_t _isRFM69HW;
-    
-    static volatile uint8_t isRFM69HW;
-    static volatile uint8_t address;
+static volatile uint8_t _slaveSelectPin;
+//static volatile uint8_t _interruptPin;
+//static volatile uint8_t _interruptNum;
+static volatile uint8_t address;
+static volatile uint8_t _promiscuousMode;
+static volatile uint8_t _powerLevel;
+static volatile uint8_t isRFM69HW;
+
+
 #if defined (SPCR) && defined (SPSR)
     uint8_t _SPCR;
     uint8_t _SPSR;
 #endif
     
-    static volatile uint8_t DATA[RF69_MAX_DATA_LEN]; // recv/xmit buf, including header & crc bytes
-    static volatile uint8_t DATALEN;
-    static volatile uint8_t SENDERID;
-    static volatile uint8_t TARGETID; // should match _address
-    static volatile uint8_t PAYLOADLEN;
-    static volatile uint8_t ACK_REQUESTED;
-    static volatile uint8_t ACK_RECEIVED; // should be polled immediately after sending a packet with ACK request
-    static volatile int16_t RSSI; // most accurate RSSI during reception (closest to the reception)
-    static volatile uint8_t _mode; // should be protected?
-    
-    
-    static volatile bool _inISR;
+static volatile uint8_t DATA[RF69_MAX_DATA_LEN]; // recv/xmit buf, including header & crc bytes
+static volatile uint8_t DATALEN;
+static volatile uint8_t SENDERID;
+static volatile uint8_t TARGETID; // should match _address
+static volatile uint8_t PAYLOADLEN;
+static volatile uint8_t ACK_REQUESTED;
+static volatile uint8_t ACK_RECEIVED; // should be polled immediately after sending a packet with ACK request
+static volatile int16_t RSSI; // most accurate RSSI during reception (closest to the reception)
+static volatile uint8_t _mode; // should be protected?
+
+
+static volatile bool _inISR;
 
 void RFM69(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW);
 void RFM69BLANK();
@@ -91,22 +90,22 @@ bool RFM69Initialize(uint8_t freqBand, uint8_t nodeID, uint8_t networkID);
 void writeReg(uint8_t addr, uint8_t val);
 uint8_t readReg(uint8_t addr);
 
- void encrypt(const char* key);
- 
-  void setMode(uint8_t mode);
-  void setHighPowerRegs(bool onOff);
-  
-  void setHighPower(bool onOFF); // has to be called after initialize() for RFM69HW
-  
-  void select();
-  void unselect();
-  
-  void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, bool requestACK);
-  bool receiveDone();
-  
-  void RFM69sleep();
-  
-  void setPowerLevel(uint8_t level); // reduce/increase transmit power level
+void encrypt(const char* key);
+
+void setMode(uint8_t mode);
+void setHighPowerRegs(bool onOff);
+
+void setHighPower(bool onOFF); // has to be called after initialize() for RFM69HW
+
+void select();
+void unselect();
+
+void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, bool requestACK);
+bool receiveDone();
+
+void RFM69sleep();
+
+void setPowerLevel(uint8_t level); // reduce/increase transmit power level
 
 
 #ifdef	__cplusplus
