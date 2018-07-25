@@ -17,6 +17,7 @@
 #include "PCF8563.h"
 
 // Data structure that will contain all data being sent via the RFM69 RF module.
+// Serial gateway needs updating whenever this gets updated.
 struct dataStruct{
     uint16_t    temp;
     uint8_t     hour;
