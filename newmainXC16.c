@@ -14,7 +14,7 @@
 #include "mcp9808.h"
 #include "spi2.h"
 #include "RFM69.h"
-
+#include "PCF8563.h"
 
 // Data structure that will contain all data being sent via the RFM69 RF module.
 struct dataStruct{
@@ -73,17 +73,31 @@ int main(void) {
     while (RFM69Initialize(FREQUENCY, MYNODEID, NETWORKID) == 0){}
     putU1S("RFM69 initialised 2.\n\r");   
     encrypt(ENCRYPTKEY);
-    putU1S("RFM69 initialised 3.\n\r");         
+    putU1S("RFM69 initialised 3.\n\r");   
+    
+    // init RTC
+    pcf8563_init();
+    putU1S("RTC init\n\r");
     
     while(1){
         // Reading the temperature
-        data.temp = readTemp();
+        data.temp = readTemp();              
+        
+        //putU1((char)(data.temp >> 8));
+        //putU1((char)(data.temp & 0xff));
+        
+        getDateTime();
+ 
+        putU1(getHour());
+        putU1(getMinute());
+        putU1(getSecond());
+        
+        data.hour = getHour();
+        data.minute = getMinute();
+        data.second = getSecond();
+        
         // Sending the temperature
-        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
-        
-        putU1((char)(data.temp >> 8));
-        putU1((char)(data.temp & 0xff));
-        
+        //send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
         __delay_ms(1000);
     }
     
