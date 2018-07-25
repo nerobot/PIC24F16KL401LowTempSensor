@@ -12,6 +12,7 @@
       <itemPath>RFM69registers.h</itemPath>
       <itemPath>mcp9808.h</itemPath>
       <itemPath>spi2.h</itemPath>
+      <itemPath>PCF8563.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -26,6 +27,7 @@
       <itemPath>RFM69.c</itemPath>
       <itemPath>mcp9808.c</itemPath>
       <itemPath>spi2.c</itemPath>
+      <itemPath>PCF8563.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
