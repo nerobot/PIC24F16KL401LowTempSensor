@@ -74,23 +74,9 @@ int main(void) {
     while (RFM69Initialize(FREQUENCY, MYNODEID, NETWORKID) == 0){}
     putU1S("RFM69 initialised 2.\n\r");   
     encrypt(ENCRYPTKEY);
-<<<<<<< HEAD
     putU1S("RFM69 initialised 3.\n\r");     
 
     float data;
-    
-    while(1){
-        // Reading the temperature
-        //data.temp = readTemp();
-        // Sending the temperature
-        data = 1.23;
-        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
-        
-       // putU1((char)(data >> 8));
-       // putU1((char)(data & 0xff));
-        putU1('d');
-=======
-    putU1S("RFM69 initialised 3.\n\r");   
     
     // init RTC
     pcf8563_init();
@@ -98,21 +84,21 @@ int main(void) {
     
     while(1){
         // Reading the temperature
-        data.temp = readTemp();              
+        //data.temp = readTemp();              
         
         //putU1((char)(data.temp >> 8));
         //putU1((char)(data.temp & 0xff));
->>>>>>> f45cdbbf6417a757b1f26879d6fe246011f5f9f8
-        
+       // putU1S("Obtaining time\n\r");
         getDateTime();
+        
  
         putU1(getHour());
         putU1(getMinute());
         putU1(getSecond());
         
-        data.hour = getHour();
-        data.minute = getMinute();
-        data.second = getSecond();
+        //data.hour = getHour();
+        //data.minute = getMinute();
+        //data.second = getSecond();
         
         // Sending the temperature
         //send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
