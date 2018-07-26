@@ -123,6 +123,7 @@ uint8_t getSecond();
 uint8_t getMinute();
 uint8_t getHour();
     
+void enableAlarm();
 
 #ifdef	__cplusplus
 }

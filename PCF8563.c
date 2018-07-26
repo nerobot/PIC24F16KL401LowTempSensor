@@ -7,8 +7,14 @@ uint8_t bcdToDec(uint8_t val)
     return ( (val/16*10) + (val%16) );
 }
 
+/* Private internal functions, but useful to look at if you need a similar func. */
+uint8_t decToBcd(uint8_t val)
+{
+    return ( (val/10*16) + (val%10) );
+}
+
 void pcf8563_init(){
-    i2cStart();
+    /*i2cStart();
     i2cAddress(PCF8563_I2CADDR_DEFAULT, WRITE_CMD);
     
     i2cWrite(0x00);     // Address
@@ -30,7 +36,7 @@ void pcf8563_init(){
     i2cWrite(SQW_32KHZ); //set SQW to default, see: setSquareWave
     i2cWrite(0x0); //timer off
     
-    i2cStop();
+    i2cStop();*/
 }
 
 void zeroClock(){    
@@ -161,4 +167,106 @@ uint8_t getMinute(){
 
 uint8_t getHour(){
     return hour;
+}
+
+uint8_t constrain(uint8_t x, uint8_t a, uint8_t b){
+    if (x < a)
+        return a;
+    else if (x > b)
+        return b;
+    else
+        return x;
+}
+
+/* set the alarm values
+ * whenever the clock matches these values an int will
+ * be sent out pin 3 of the Pcf8563 chip
+ * 
+ * When value > 99, its alarm is switched off.
+ */
+void setAlarm(uint8_t min, uint8_t hour, uint8_t day, uint8_t weekday)
+{
+    getDateTime();  // operate on current values
+    if (min <99) {
+        min = constrain(min, 0, 59);
+        min = decToBcd(min);
+        min &= ~RTCC_ALARM;
+    } else {
+        min = 0x0; min |= RTCC_ALARM;
+    }
+
+    if (hour <99) {
+        hour = constrain(hour, 0, 23);
+        hour = decToBcd(hour);
+        hour &= ~RTCC_ALARM;
+    } else {
+        hour = 0x0; hour |= RTCC_ALARM;
+    }
+
+    if (day <99) {
+        day = constrain(day, 1, 31);
+        day = decToBcd(day); day &= ~RTCC_ALARM;
+    } else {
+        day = 0x0; day |= RTCC_ALARM;
+    }
+
+    if (weekday <99) {
+        weekday = constrain(weekday, 0, 6);
+        weekday = decToBcd(weekday);
+        weekday &= ~RTCC_ALARM;
+    } else {
+        weekday = 0x0; weekday |= RTCC_ALARM;
+    }
+
+    alarm_hour = hour;
+    alarm_minute = min;
+    alarm_weekday = weekday;
+    alarm_day = day;
+
+    // First set alarm values, then enable
+    //Wire.beginTransmission(Rtcc_Addr);    // Issue I2C start signal
+    i2cStart();
+    i2cAddress(PCF8563_I2CADDR_DEFAULT, WRITE_CMD);
+    //Wire.write((byte)RTCC_ALRM_MIN_ADDR);
+    i2cWrite(RTCC_ALRM_MIN_ADDR);
+    i2cWrite(alarm_minute);
+    i2cWrite(alarm_hour);
+    i2cWrite(alarm_day);
+    i2cWrite(alarm_weekday);
+    //Wire.endTransmission();
+    i2cStop();
+
+    enableAlarm();
+}
+/*    i2cStart();
+    i2cAddress(PCF8563_I2CADDR_DEFAULT, WRITE_CMD);
+    
+    i2cWrite(0x00);     // Address
+    
+    i2cWrite(0x00);     // control / status 1
+    
+    i2cStop();  */
+
+/* enable alarm interrupt
+ * whenever the clock matches these values an int will
+ * be sent out pin 3 of the Pcf8563 chip
+ */
+void enableAlarm()
+{
+    getDateTime();  // operate on current values
+    //set status2 AF val to zero
+    status2 &= ~RTCC_ALARM_AF;
+    //set TF to 1 masks it from changing, as per data-sheet
+    status2 |= RTCC_TIMER_TF;
+    //enable the interrupt
+    status2 |= RTCC_ALARM_AIE;
+
+    //enable the interrupt
+    //Wire.beginTransmission(Rtcc_Addr);  // Issue I2C start signal
+    i2cStart();
+    i2cAddress(PCF8563_I2CADDR_DEFAULT, WRITE_CMD);
+    i2cWrite(RTCC_STAT2_ADDR);
+    i2cWrite(status2);
+    //Wire.endTransmission();
+    i2cStop();
 }

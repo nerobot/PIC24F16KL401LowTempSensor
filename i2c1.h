@@ -1,8 +1,10 @@
-/* 
- * File:   i2c1.h
- * Author: stevend
- *
- * Created on 23 July 2018, 07:39
+/*! @file i2c1.h
+ * 
+ * @brief Library for controlling the i2c1 module (MSSP based)
+ * 
+ * @author Steven Daglish
+ * 
+ * @date 26 July 2018
  */
 
 #ifndef I2C1_H
