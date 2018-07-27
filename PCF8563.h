@@ -121,9 +121,10 @@ void getDateTime();
 
 uint8_t getSecond();
 uint8_t getMinute();
-uint8_t getHour();
-    
+uint8_t getHour();   
 void enableAlarm();
+void clearAlarm();
+void setAlarm(uint8_t min, uint8_t hour, uint8_t day, uint8_t weekday);
 
 #ifdef	__cplusplus
 }

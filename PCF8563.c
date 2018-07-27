@@ -270,3 +270,21 @@ void enableAlarm()
     //Wire.endTransmission();
     i2cStop();
 }
+
+// Clears the alarm and interupt.
+void clearAlarm()
+{
+    //set status2 AF val to zero to reset alarm
+    status2 &= ~RTCC_ALARM_AF;
+    //set TF to 1 masks it from changing, as per data-sheet
+    status2 |= RTCC_TIMER_TF;
+    //turn off the interrupt
+    status2 &= ~RTCC_ALARM_AIE;
+
+    //Wire.beginTransmission(Rtcc_Addr);
+    i2cStart();
+    i2cAddress(PCF8563_I2CADDR_DEFAULT, WRITE_CMD);
+    i2cWrite(RTCC_STAT2_ADDR);
+    i2cWrite(status2);
+    i2cStop();
+}

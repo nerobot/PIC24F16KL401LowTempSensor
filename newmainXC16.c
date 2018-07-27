@@ -48,6 +48,13 @@ typedef enum {
 
 int main(void) {
     // Setting up needed variables.
+
+    // Setting up IO
+    LEDTRIS = 0;
+    LEDANS = 0;
+    LED = 0;
+    
+    RTCINTTRIS = 0;
     
     // init uart1
     initU1();
@@ -80,10 +87,19 @@ int main(void) {
     pcf8563_init();
     zeroClock();
     putU1S("RTC init\n\r");
-    setAlarm(1, 100, 100, 100, 100);
-    //setSecond 
+    setAlarm(1, 100, 100, 100);
     
     while(1){
+        if (RTCIN == 1){
+            LED ^= 1;
+            clearAlarm();
+            
+            getDateTime();        
+            putU1(getHour());
+            putU1(getMinute());
+            putU1(getSecond());
+        }
+        /*
         // Reading the temperature
         data.temp = readTemp();              
         
@@ -103,7 +119,7 @@ int main(void) {
         
         // Sending the temperature
         //send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
-        __delay_ms(1000);
+        __delay_ms(1000);*/
     }
     
     return 0;
