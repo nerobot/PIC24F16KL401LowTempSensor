@@ -27,7 +27,7 @@
         }
     }
 #else
-    void initU1(uint8_t bRate, uint16_t u1Mode, uint16_t u1Sta){
+    void initU1(){
     }
 
     void putU1(char c){

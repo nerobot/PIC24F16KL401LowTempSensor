@@ -93,12 +93,13 @@ int main(void) {
         if (RTCIN == 1){
             LED ^= 1;
             clearAlarm();
-            
+
             getDateTime();        
             putU1(getHour());
             putU1(getMinute());
-            putU1(getSecond());
+            putU1(getSecond());                
         }
+        
         /*
         // Reading the temperature
         data.temp = readTemp();              
