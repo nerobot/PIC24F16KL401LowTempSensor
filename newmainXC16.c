@@ -46,15 +46,45 @@ typedef enum {
 #define ENCRYPT         true                    // Set to "true" to use encryption
 #define ENCRYPTKEY      "TOPSECRETPASSWRD"      // Use the same 16-byte key on all nodes
 
+uint8_t timerMinute = 1;
+
+void __attribute__((interrupt,auto_psv)) _INT2Interrupt(void) //External Interrupt 2
+{
+    _INT2IF = 0;
+}
+
 int main(void) {
     // Setting up needed variables.
-
+    
+    TRISA = 0x0000;
+    TRISB = 0x0000;
+    
+    _HLVDEN = 0;
+    PMD4bits.HLVDMD = 0;
+    PMD1 = 0xffff;
+    PMD2 = 0xffff;
+    PMD3 = 0xffff;
+    PMD4 = 0xffff;
+    
+    _T1MD = 0;
+    _T2MD = 0;
+    
+            _T3MD = 0;
+    _T4MD = 0;
+    _SSP1MD = 0;
+    _U1MD = 0;
+    _SSP2MD = 0;
+    
     // Setting up IO
     LEDTRIS = 0;
     LEDANS = 0;
     LED = 0;
     
-    RTCINTTRIS = 0;
+    RTCINTTRIS = 1;
+    
+    _TRISA3 = 0;
+    _ANSA3 = 0;
+    _RA3 = 1;
     
     // init uart1
     initU1();
@@ -69,6 +99,7 @@ int main(void) {
         putU1S("mcp init failed\n\r");
     }
     putU1S("mcp init\n\r");
+    mcpShutdown();
     
     
     // spi init
@@ -84,21 +115,51 @@ int main(void) {
     putU1S("RFM69 initialised 3.\n\r");     
     
     // init RTC
+ 
     pcf8563_init();
     zeroClock();
-    putU1S("RTC init\n\r");
-    setAlarm(1, 100, 100, 100);
+    //putU1S("RTC init\n\r");
+    //setAlarm(timerMinute++, 100, 100, 100);
+   // putU1S("alarm set\r\n");
+    _INT2EP = 1;
+    _INT2IE = 1;
+    _INT2IP = 0b111;
+    
+    
     
     while(1){
-        if (RTCIN == 1){
-            LED ^= 1;
-            clearAlarm();
-
-            getDateTime();        
-            putU1(getHour());
-            putU1(getMinute());
-            putU1(getSecond());                
+        _RA3 = 1;
+        mcpWake();
+        data.temp = 0;
+        __delay_ms(1000);
+        putU1S("alarm triggered\n\r");
+        LED ^= 1;
+        clearAlarm();
+        setAlarm(timerMinute++, 100, 100, 100);
+        if (timerMinute >= 60){
+            timerMinute = 0;
         }
+        putU1S("alarm set again\n\r");
+
+        getDateTime();   
+        data.hour = getHour();
+        //putU1(getHour());
+        data.minute = getMinute();
+        //utU1(getMinute());
+        data.second = getSecond();
+        
+        data.temp = readTemp();
+        mcpShutdown();
+        send(GATEWAY_ID, (const void*)(&data), sizeof(data), 1);
+        RFM69sleep();
+        _RA3 = 0;
+        Sleep();
+        //putU1(getSecond());   
+       // __delay_ms(1000);
+        //Sleep();
+        //if (RTCIN == 0){
+            
+        //}
         
         /*
         // Reading the temperature

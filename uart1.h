@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 // Used to turn the uart on or off as needed
-#define DEBUG    
+//#define DEBUG    
     
 // Oscillator config    
 #define XTAL_FREQ       8000000UL               // Raw oscillator freq

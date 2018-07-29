@@ -28,14 +28,14 @@ extern "C" {
 // FOSCSEL
 #pragma config FNOSC = FRC              // Oscillator Select (Fast RC Oscillator (FRC))
 #pragma config SOSCSRC = DIG            // SOSC Source Type (Digital Mode for use with external clock on SCLKI)
-#pragma config LPRCSEL = HP             // LPRC Power and Accuracy (High Power/High Accuracy)
+#pragma config LPRCSEL = LP             // LPRC Power and Accuracy (Low Power/Low Accuracy)
 #pragma config IESO = ON                // Internal External Switch Over bit (Internal External Switchover mode enabled (Two-speed Start-up enabled))
 
 // FOSC
 #pragma config POSCMD = NONE            // Primary Oscillator Mode (Primary oscillator disabled)
 #pragma config OSCIOFNC = ON            // CLKO Pin I/O Function (Port I/O enabled (CLKO disabled))
 #pragma config POSCFREQ = MS            // Primary Oscillator Frequency Range (Primary Oscillator/External Clock frequency between 100kHz to 8MHz)
-#pragma config SOSCSEL = SOSCHP         // SOSC Power Selection Configuration bits (Secondary Oscillator configured for high-power operation)
+#pragma config SOSCSEL = SOSCLP         // SOSC Power Selection Configuration bits (Secondary Oscillator configured for low-power operation)
 #pragma config FCKSM = CSECME           // Clock Switching and Monitor Selection (Clock Switching and Fail-safe Clock Monitor Enabled)
 
 // FWDT
@@ -46,7 +46,7 @@ extern "C" {
 
 // FPOR
 #pragma config BOREN = BOR0             // Brown-out Reset Enable bits (Brown-out Reset disabled in hardware; SBOREN bit disabled)
-#pragma config PWRTEN = ON              // Power-up Timer Enable (PWRT enabled)
+#pragma config PWRTEN = OFF             // Power-up Timer Enable (PWRT disabled)
 #pragma config I2C1SEL = PRI            // Alternate I2C1 Pin Mapping bit (Default SCL1/SDA1 Pins for I2C1)
 #pragma config BORV = V18               // Brown-out Reset Voltage bits (Brown-out Reset at 1.8V)
 #pragma config MCLRE = ON               // MCLR Pin Enable bit (RA5 input disabled; MCLR enabled)
@@ -56,7 +56,8 @@ extern "C" {
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
-
+// #pragma config statements should precede project file includes.
+// Use project enums instead of #define for ON and OFF.
 
 #ifdef	__cplusplus
 }
