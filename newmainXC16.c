@@ -67,10 +67,10 @@ int main(void) {
     PMD4 = 0xffff;
     
     _T1MD = 0;
-    _T2MD = 0;
+    //_T2MD = 0;
     
-            _T3MD = 0;
-    _T4MD = 0;
+    //        _T3MD = 0;
+   // _T4MD = 0;
     _SSP1MD = 0;
     _U1MD = 0;
     _SSP2MD = 0;
@@ -128,6 +128,12 @@ int main(void) {
     
     
     while(1){
+        _T1MD = 0;
+        _SSP1MD = 0;
+        _SSP2MD = 0;
+        
+        i2cInit();
+        spiInit(SPI_MODE0);
         _RA3 = 1;
         mcpWake();
         data.temp = 0;
@@ -153,6 +159,12 @@ int main(void) {
         send(GATEWAY_ID, (const void*)(&data), sizeof(data), 1);
         RFM69sleep();
         _RA3 = 0;
+        _T1MD = 1;
+        _SSP1MD = 1;
+        _SSP2MD = 1;
+        
+        TRISBbits.TRISB9 = 0;
+        TRISBbits.TRISB8 = 0;
         Sleep();
         //putU1(getSecond());   
        // __delay_ms(1000);
