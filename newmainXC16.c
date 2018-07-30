@@ -53,38 +53,54 @@ void __attribute__((interrupt,auto_psv)) _INT2Interrupt(void) //External Interru
     _INT2IF = 0;
 }
 
-int main(void) {
-    // Setting up needed variables.
-    
+void initPorts(){
     TRISA = 0x0000;
     TRISB = 0x0000;
     
-    _HLVDEN = 0;
-    PMD4bits.HLVDMD = 0;
-    PMD1 = 0xffff;
-    PMD2 = 0xffff;
-    PMD3 = 0xffff;
-    PMD4 = 0xffff;
-    
-    _T1MD = 0;
-    //_T2MD = 0;
-    
-    //        _T3MD = 0;
-   // _T4MD = 0;
-    _SSP1MD = 0;
-    _U1MD = 0;
-    _SSP2MD = 0;
-    
-    // Setting up IO
+    // Individual pins
     LEDTRIS = 0;
     LEDANS = 0;
     LED = 0;
     
     RTCINTTRIS = 1;
     
+    // Used for powering RTC
+    // TODO: (re-name in defines))
     _TRISA3 = 0;
     _ANSA3 = 0;
     _RA3 = 1;
+}
+
+void initPMD(){
+    // Turn off all modules, only turning on the needed ones.
+    PMD1 = 0xffff;
+    PMD2 = 0xffff;
+    PMD3 = 0xffff;
+    PMD4 = 0xffff;
+    
+    // Now turning on the needed modules.
+    _T1MD = 0;              // Timer1
+    _SSP1MD = 0;            // I2C
+    _U1MD = 0;              // UART
+    _SSP2MD = 0;            // SPI
+}
+
+void initInterrupts(){
+    // INT2 pin change interrupt (high to low)
+    _INT2EP = 1;
+    _INT2IE = 1;
+    _INT2IP = 0b111;
+}
+
+void init(){
+    initPorts();
+    initPMD();
+    initInterrupts();
+}
+
+int main(void) {
+    // Setting up needed variables.
+    init();
     
     // init uart1
     initU1();
@@ -100,8 +116,7 @@ int main(void) {
     }
     putU1S("mcp init\n\r");
     mcpShutdown();
-    
-    
+        
     // spi init
     spiInit(SPI_MODE0);
     putU1S("spi init\n\r");
@@ -114,18 +129,9 @@ int main(void) {
     encrypt(ENCRYPTKEY);
     putU1S("RFM69 initialised 3.\n\r");     
     
-    // init RTC
- 
+    // init RTC 
     pcf8563_init();
     zeroClock();
-    //putU1S("RTC init\n\r");
-    //setAlarm(timerMinute++, 100, 100, 100);
-   // putU1S("alarm set\r\n");
-    _INT2EP = 1;
-    _INT2IE = 1;
-    _INT2IP = 0b111;
-    
-    
     
     while(1){
         _T1MD = 0;
@@ -163,37 +169,10 @@ int main(void) {
         _SSP1MD = 1;
         _SSP2MD = 1;
         
+        // Small but of power saving
         TRISBbits.TRISB9 = 0;
         TRISBbits.TRISB8 = 0;
         Sleep();
-        //putU1(getSecond());   
-       // __delay_ms(1000);
-        //Sleep();
-        //if (RTCIN == 0){
-            
-        //}
-        
-        /*
-        // Reading the temperature
-        data.temp = readTemp();              
-        
-        //putU1((char)(data.temp >> 8));
-        //putU1((char)(data.temp & 0xff));
-       // putU1S("Obtaining time\n\r");
-        getDateTime();
-        
- 
-        putU1(getHour());
-        putU1(getMinute());
-        putU1(getSecond());
-        
-        data.hour = getHour();
-        data.minute = getMinute();
-        data.second = getSecond();
-        
-        // Sending the temperature
-        //send(GATEWAY_ID, (const void*)(&data), sizeof(data), 0);
-        __delay_ms(1000);*/
     }
     
     return 0;

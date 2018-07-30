@@ -184,7 +184,7 @@ uint8_t constrain(uint8_t x, uint8_t a, uint8_t b){
  * 
  * When value > 99, its alarm is switched off.
  */
-void setAlarm(uint8_t min, uint8_t hour, uint8_t day, uint8_t weekday)
+    void setAlarm(uint8_t min, uint8_t hour, uint8_t day, uint8_t weekday)
 {
     getDateTime();  // operate on current values
     if (min <99) {
